@@ -1,7 +1,58 @@
-<button id="startBattle">DEPLOY FORCES</button>
-<button id="toggleHistory" style="background: #444;">VIEW WAR HISTORY</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Command: Fog of War</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🌍 Global Command: Fog of War</h1>
+        
+        <div class="setup-section">
+            <div class="selection-box">
+                <label>Attacking Nation</label>
+                <select id="playerCountry"></select>
+                <label>Theater of War</label>
+                <select id="battleLocation">
+                    <option value="The Sahara Desert">The Sahara Desert</option>
+                    <option value="The Siberian Tundra">The Siberian Tundra</option>
+                    <option value="The Amazon Rainforest">The Amazon Rainforest</option>
+                    <option value="Urban Ruins">Urban Ruins</option>
+                </select>
+            </div>
 
-<div id="historySection" class="hidden">
-    <h3>📜 Global Conflict Records</h3>
-    <ul id="historyList"></ul>
-</div>
+            <div class="vs">VS</div>
+
+            <div class="selection-box">
+                <label>Defending Nation</label>
+                <select id="enemyCountry"></select>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="startBattle">DEPLOY FORCES</button>
+            <button id="toggleHistory">WAR RECORDS & LEADERBOARD</button>
+        </div>
+
+        <div id="historySection" class="hidden">
+            <div class="stats-grid">
+                <div>
+                    <h3>🏆 Top Conquerors</h3>
+                    <ul id="leaderboardList"></ul>
+                </div>
+                <div>
+                    <h3>📜 Recent Conflicts</h3>
+                    <ul id="historyList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="battleLog" class="log-window">
+            <p class="system-msg">READY FOR DEPLOYMENT. SELECT NATIONS AND CLICK START.</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
