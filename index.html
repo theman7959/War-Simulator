@@ -1,40 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Conquest Sim</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="game-container">
-        <h1>🌍 Global Combat Simulator</h1>
-        
-        <div class="setup-section">
-            <div class="player-selection">
-                <h3>Select Your Country</h3>
-                <select id="playerCountry"></select>
-                <select id="battleLocation">
-                    <option value="Urban City">Urban City (Defense Bonus)</option>
-                    <option value="Mountain Pass">Mountain Pass (Attrition)</option>
-                    <option value="Open Plains">Open Plains (High Damage)</option>
-                </select>
-            </div>
+<button id="startBattle">DEPLOY FORCES</button>
+<button id="toggleHistory" style="background: #444;">VIEW WAR HISTORY</button>
 
-            <div class="vs">VS</div>
-
-            <div class="enemy-selection">
-                <h3>Select Opponent</h3>
-                <select id="enemyCountry"></select>
-            </div>
-        </div>
-
-        <button id="startBattle">DEPLOY FORCES</button>
-
-        <div id="battleLog" class="log-window">
-            <p>Awaiting orders, Commander...</p>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+<div id="historySection" class="hidden">
+    <h3>📜 Global Conflict Records</h3>
+    <ul id="historyList"></ul>
+</div>
