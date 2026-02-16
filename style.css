@@ -1,44 +1,23 @@
-body {
-    background-color: #1a1a1a;
-    color: #00ff41; /* Matrix/Radar Green */
-    font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
+.hidden {
+    display: none;
 }
 
-.game-container {
-    width: 80%;
-    max-width: 800px;
-    border: 2px solid #00ff41;
-    padding: 20px;
-    background: #000;
-    box-shadow: 0 0 15px #00ff41;
-}
-
-.setup-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 20px 0;
-}
-
-select, button {
-    background: #222;
-    color: #00ff41;
-    border: 1px solid #00ff41;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.log-window {
-    height: 200px;
-    border: 1px inset #00ff41;
+#historySection {
+    background: #111;
+    border: 1px solid #444;
+    padding: 15px;
     margin-top: 20px;
-    padding: 10px;
+    max-height: 200px;
     overflow-y: auto;
-    background: #050505;
 }
 
-.vs { font-weight: bold; font-size: 24px; color: red; }
+#historyList {
+    list-style: square;
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+.log-entry strong {
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px currentColor;
+}
