@@ -1,23 +1,68 @@
-.hidden {
-    display: none;
+body {
+    background-color: #0d0d0d;
+    color: #00ff41;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 
-#historySection {
+.game-container {
+    width: 90%;
+    max-width: 900px;
+    background: #000;
+    border: 1px solid #333;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,255,65,0.2);
+}
+
+h1 { text-align: center; border-bottom: 2px solid #00ff41; padding-bottom: 10px; }
+
+.setup-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     background: #111;
-    border: 1px solid #444;
-    padding: 15px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.selection-box { display: flex; flex-direction: column; width: 40%; }
+.vs { font-size: 2rem; color: #ff4d4d; font-weight: bold; }
+
+select, button {
+    background: #1a1a1a;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button:hover { background: #00ff41; color: #000; }
+
+.log-window {
+    height: 300px;
+    background: #050505;
+    border: 1px solid #222;
     margin-top: 20px;
-    max-height: 200px;
+    padding: 15px;
     overflow-y: auto;
 }
 
-#historyList {
-    list-style: square;
-    color: #aaa;
-    font-size: 0.8rem;
+.hidden { display: none; }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background: #111;
+    padding: 15px;
+    border: 1px dashed #00ff41;
 }
 
-.log-entry strong {
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px currentColor;
-}
+.log-entry { font-size: 0.9rem; margin-bottom: 4px; border-bottom: 1px solid #111; }
+.time { color: #888; }
+.event-alert { color: #ffcc00; font-weight: bold; background: #332200; padding: 5px; margin: 10px 0; }
+.victory-box { text-align: center; border: 4px solid #00ff41; padding: 20px; background: #001a00; }
