@@ -1,43 +1,80 @@
-const countries = [
-    { name: "USA", power: 95, health: 100 },
-    { name: "Japan", power: 80, health: 100 },
-    { name: "United Kingdom", power: 85, health: 100 },
-    { name: "Brazil", power: 70, health: 100 },
-    { name: "Australia", power: 75, health: 100 }
+const countries = ["USA", "China", "Russia", "UK", "France", "Japan", "Germany", "India", "Brazil", "Canada", "Australia", "Ukraine", "Israel", "South Korea", "Mexico", "Egypt", "Turkey", "Poland"]; // Keep your full list here
+
+const battleEvents = [
+    { text: "Supply lines cut! One side is struggling.", effect: (h1, h2) => Math.random() > 0.5 ? [h1 - 15, h2] : [h1, h2 - 15] },
+    { text: "Air Superiority established!", effect: (h1, h2) => Math.random() > 0.5 ? [h1 + 5, h2 - 10] : [h1 - 10, h2 + 5] },
+    { text: "Heavy Rains: All movement stalled.", effect: (h1, h2) => [h1, h2] }
 ];
 
-const playerSelect = document.getElementById('playerCountry');
-const enemySelect = document.getElementById('enemyCountry');
 const log = document.getElementById('battleLog');
+const historyList = document.getElementById('historyList');
+const historySection = document.getElementById('historySection');
+let warHistory = [];
 
-// Populate Dropdowns
-countries.forEach(c => {
-    playerSelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-    enemySelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-});
+// Helper to turn hidden health into status words
+function getStatus(health) {
+    if (health > 80) return "DOMINATING";
+    if (health > 50) return "STABLE";
+    if (health > 25) return "PUSHED BACK";
+    if (health > 10) return "CRITICAL";
+    return "COLLAPSING";
+}
 
-document.getElementById('startBattle').addEventListener('click', () => {
-    const p1 = {...countries.find(c => c.name === playerSelect.value)};
-    const p2 = {...countries.find(c => c.name === enemySelect.value)};
-    const location = document.getElementById('battleLocation').value;
+function startSimulation() {
+    let p1Name = document.getElementById('playerCountry').value;
+    let p2Name = document.getElementById('enemyCountry').value;
+    let p1H = 100, p2H = 100;
+    let location = document.getElementById('battleLocation').value;
+    let mins = 0, hours = 0, days = 1;
 
-    log.innerHTML = `<strong>Battle initiated in ${location}!</strong><br>`;
+    log.innerHTML = `<div class="event-msg">⚔️ CONFLICT BEGUN: ${location}</div><hr>`;
 
-    const fight = setInterval(() => {
-        // Random variance in damage
-        let p1Dmg = Math.floor(Math.random() * (p1.power / 5));
-        let p2Dmg = Math.floor(Math.random() * (p2.power / 5));
+    const simLoop = setInterval(() => {
+        mins += 30;
+        if (mins >= 60) { mins = 0; hours++; }
+        if (hours >= 24) { hours = 0; days++; }
 
-        p2.health -= p1Dmg;
-        p1.health -= p2Dmg;
+        p1H -= (Math.random() * 1.5);
+        p2H -= (Math.random() * 1.5);
 
-        log.innerHTML += `${p1.name} hits for ${p1Dmg}. ${p2.name} hits for ${p2Dmg}.<br>`;
+        if (Math.random() < 0.05) {
+            const event = battleEvents[Math.floor(Math.random() * battleEvents.length)];
+            const results = event.effect(p1H, p2H);
+            p1H = results[0]; p2H = results[1];
+            log.innerHTML += `<div class="event-alert">⚠️ ${event.text}</div>`;
+        }
+
+        const timeStamp = `D${days} ${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+        
+        // DISPLAYING STATUS INSTEAD OF HEALTH
+        log.innerHTML += `
+            <div class="log-entry">
+                <span class="time">[${timeStamp}]</span> 
+                <span>${p1Name}: <strong>${getStatus(p1H)}</strong></span> 
+                <span>${p2Name}: <strong>${getStatus(p2H)}</strong></span>
+            </div>`;
+
         log.scrollTop = log.scrollHeight;
 
-        if (p1.health <= 0 || p2.health <= 0) {
-            clearInterval(fight);
-            const winner = p1.health > p2.health ? p1.name : p2.name;
-            log.innerHTML += `--- <br><strong>MISSION COMPLETE: ${winner} VICTORIOUS</strong>`;
+        if (p1H <= 0 || p2H <= 0) {
+            clearInterval(simLoop);
+            const winner = p1H > p2H ? p1Name : p2Name;
+            const loser = p1H > p2H ? p2Name : p1Name;
+
+            // Save to History
+            warHistory.push(`${winner} defeated ${loser} in ${location} (${days} days)`);
+            updateHistoryUI();
+
+            log.innerHTML += `<div class="victory-box"><h1>${winner} VICTORIOUS</h1></div>`;
         }
-    }, 800);
+    }, 100);
+}
+
+function updateHistoryUI() {
+    historyList.innerHTML = warHistory.map(entry => `<li>${entry}</li>`).join('');
+}
+
+document.getElementById('startBattle').addEventListener('click', startSimulation);
+document.getElementById('toggleHistory').addEventListener('click', () => {
+    historySection.classList.toggle('hidden');
 });
